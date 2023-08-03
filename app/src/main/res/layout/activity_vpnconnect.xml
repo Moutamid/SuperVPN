@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/serverParentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/serverConnectingProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone" />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:id="@+id/homeContextRL"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Super VPN"
+                            android:textSize="40dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="false"
+                                android:gravity="center">
+
+
+                                <ImageView
+                                    android:id="@+id/serverConnect"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:layout_centerInParent="true"
+                                    android:clickable="false"
+                                    android:onClick="serverOnClick"
+                                    android:src="@drawable/shutdown" />
+
+                                <com.jackandphantom.circularprogressbar.CircleProgressbar
+                                    android:id="@+id/circlerprogrss"
+                                    android:layout_width="200dp"
+                                    android:layout_height="200dp"
+                                    app:cpb_backgroundProgressColor="@color/switchbar"
+                                    app:cpb_backgroundProgressWidth="30"
+                                    app:cpb_foregroundProgressColor="#22ceff"
+                                    app:cpb_foregroundProgressWidth="30"
+                                    app:cpb_progress="0"
+                                    app:cpb_roundedCorner="true"
+                                    app:cpb_touchEnabled="false" />
+
+                            </RelativeLayout>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/stserver"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:text="Status:"
+                                android:textAllCaps="false"
+                                android:textColor="#000000"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/serverStatus"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+
+
+                                android:textAllCaps="false"
+                                android:textColor="#22ceff"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <!--                    <TextView-->
+                        <!--                        android:id="@+id/homeBtnChooseCountry"-->
+                        <!--                        android:layout_width="120dp"-->
+                        <!--                        android:layout_height="30dp"-->
+                        <!--                        android:layout_marginTop="20dp"-->
+                        <!--                        android:background="@drawable/button_bg"-->
+                        <!--                        android:gravity="center"-->
+                        <!--                        android:text="Choose Servers"-->
+                        <!--                        android:textColor="@color/common_google_signin_btn_text_dark_default" />-->
+
+                    </LinearLayout>
+
+                    <!--                <View-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="2dp"-->
+                    <!--                    android:layout_alignParentStart="true"-->
+                    <!--                    android:layout_alignParentLeft="true"-->
+                    <!--                    android:layout_alignParentTop="true"-->
+                    <!--                    android:layout_marginStart="0dp"-->
+                    <!--                    android:layout_marginLeft="0dp"-->
+                    <!--                    android:layout_marginTop="140dp"-->
+                    <!--                    android:background="@color/additionalServer" />-->
+
+                    <LinearLayout
+                         android:id="@+id/homeBtnChooseCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/selectcountryview"
+
+                        android:orientation="horizontal">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/serverFlag"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/usa_flag"
+                            app:civ_border_color="#FF000000"
+                            app:civ_border_width="2dp"
+                            android:layout_marginStart="5dp" />
+                        <TextView
+                            android:id="@+id/elapse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/united_states"
+                            android:textAllCaps="true"
+                            android:textColor="#000000"
+                            android:textSize="19sp"
+                            android:layout_marginStart="10dp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/ic_rightarrow"
+                            android:layout_marginStart="25dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#B9F5FD"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="40dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Connected Server"
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+
+                                android:text="Secure"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#000000" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Time"
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:id="@+id/tvtimer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+
+                                android:text="00:00:00"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_alignParentBottom="true"
+    android:id="@+id/ad_container"
+    android:orientation="vertical">
+
+</FrameLayout>
+
+</RelativeLayout>
