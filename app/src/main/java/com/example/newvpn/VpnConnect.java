@@ -282,7 +282,7 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
 
 
     public void updateConnectionStatus(String duration, String lastPacketReceive, String byteIn, String byteOut) {
-        tvtimer.setText("" + duration);
+        tvtimer.setText("" + duration+" "+ lastPacketReceive+" "+ byteIn+" "+ byteOut);
     }
 
     public void showToast(String message) {

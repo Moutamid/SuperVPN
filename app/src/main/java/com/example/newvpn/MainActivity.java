@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkApp(this);
+//        checkApp(this);
 
         agree = findViewById(R.id.btagree);
         privacypolicy = findViewById(R.id.tvpolicy);

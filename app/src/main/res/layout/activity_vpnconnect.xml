@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -46,19 +44,66 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="50dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Super VPN"
-                            android:textSize="40dp"
-                            android:textStyle="bold" />
+                            android:layout_margin="20dp">
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:src="@drawable/iconvpn" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="VPN"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:background="@drawable/btn_bg"
+                            android:gravity="end"
+                            android:paddingStart="16dp"
+                            android:paddingTop="13dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="13dp">
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:src="@drawable/uk_flag" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginLeft="15dp"
+                                android:text="Germany"
+                                android:textColor="#958F8F"
+
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_marginTop="3dp"
+                                android:rotation="180"
+                                android:src="@drawable/baseline_arrow_back_ios_24"
+                                android:tint="#958F8F" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -66,15 +111,26 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:orientation="vertical">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center">
 
+                            <ImageView
+
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:layout_centerInParent="true"
+                                android:clickable="false"
+                                android:onClick="serverOnClick"
+                                android:src="@drawable/connected" />
+
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:clickable="false"
+                                android:visibility="gone"
                                 android:gravity="center">
 
 
