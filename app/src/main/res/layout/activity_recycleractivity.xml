@@ -5,44 +5,52 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#251E61"
     tools:context=".CountryList">
-    <ImageButton
+    <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/ic_arrow_back_black_24dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
         android:id="@+id/bt_back"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        />
+        android:layout_margin="20dp"
+        app:tint="@color/white" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/select_server"
+        android:text="Select Country"
+        android:fontFamily="@font/poppins_bold"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         />
+
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selectcountryview"
-        android:layout_below="@id/bt_back"
         android:id="@+id/edit_search"
-        android:hint="@string/Search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/bt_back"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_bg"
+
         android:drawableRight="@drawable/ic_search"
+        android:hint="@string/Search"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:textSize="20sp"
         android:textColor="@color/black"
-        android:layout_margin="20dp"/>
+        android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_search"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/serverListRv"/>
 
     <LinearLayout

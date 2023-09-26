@@ -10,9 +10,11 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.VpnService;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -22,9 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.AdOptionsView;
 import com.facebook.ads.InterstitialAd;
@@ -35,19 +40,23 @@ import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdLayout;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.jackandphantom.circularprogressbar.CircleProgressbar;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
 import de.blinkt.openvpn.OpenVpnApi;
 import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.OpenVPNThread;
 import de.blinkt.openvpn.core.VpnStatus;
 
 public class VpnConnect extends AppCompatActivity implements ChangeServer {
-    ImageView btconnect, serverflag;
+    TextView btconnect_txt, disconnect_serverConnect_text;
+    ImageView btconnect;
+    ImageView serverflag;
     boolean vpnStart = false;
     private Server mserver;
     TextView logtv, tvtimer, namecountry;
@@ -57,20 +66,30 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
     private OpenVPNThread vpnThread = new OpenVPNThread();
     private OpenVPNService vpnService = new OpenVPNService();
     private SharedPreference preference;
-
+    LottieAnimationView connecting, disconnect, connected;
+    TextView ip_address, upload, download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vpnconnect);
-
         logtv = findViewById(R.id.serverStatus);
         btconnect = findViewById(R.id.serverConnect);
+        connected = findViewById(R.id.connected);
+        btconnect_txt = findViewById(R.id.serverConnect_text);
+        disconnect_serverConnect_text = findViewById(R.id.disconnect_serverConnect_text);
         namecountry = findViewById(R.id.elapse);
+        ip_address = findViewById(R.id.ip_address);
+        disconnect = findViewById(R.id.disconnect);
+        connecting = findViewById(R.id.connecting);
+        upload = findViewById(R.id.upload);
+        download = findViewById(R.id.download);
 
         country = findViewById(R.id.homeBtnChooseCountry);
         serverflag = findViewById(R.id.serverFlag);
-
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+        ip_address.setText("Your IP: " + ipAddress);
         tvtimer = findViewById(R.id.tvtimer);
         final InterstitialAd[] countryinterstitial = new InterstitialAd[1];
         final InterstitialAd[] fbinterstitial = new InterstitialAd[1];
@@ -98,6 +117,10 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
             isServiceRunning();
             VpnStatus.initLogCache(this.getCacheDir());
             if (logtv.getText().equals("Connected")) {
+                btconnect.setVisibility(View.INVISIBLE);
+                connected.setVisibility(View.VISIBLE);
+                disconnect.setVisibility(View.INVISIBLE);
+                connecting.setVisibility(View.INVISIBLE);
                 circleProgressbar.setProgress(100);
             }
         }
@@ -112,10 +135,30 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
 
             }
         });
-        btconnect.setOnClickListener(new View.OnClickListener() {
+        btconnect_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btconnect_txt.setVisibility(View.GONE);
+                disconnect_serverConnect_text.setVisibility(View.VISIBLE);
+                AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
+                if (vpnStart) {
+                    confirmDisconnect();
+                } else {
 
+                    circleProgressbar.enabledTouch(false);
+                    circleProgressbar.setProgress(0);
+                    int animationDuration = 10000; // 2500ms = 2,5s
+                    circleProgressbar.setProgressWithAnimation(100, animationDuration);
+                    prepareVpn();
+                    circleProgressbar.setProgress(100);
+                }
+            }
+        });
+        disconnect_serverConnect_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disconnect_serverConnect_text.setVisibility(View.GONE);
+                btconnect_txt.setVisibility(View.VISIBLE);
 
                 AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
                 if (vpnStart) {
@@ -214,6 +257,11 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
 
             // Update log
             logtv.setText("Connecting...");
+            btconnect.setVisibility(View.INVISIBLE);
+            connected.setVisibility(View.INVISIBLE);
+            disconnect.setVisibility(View.INVISIBLE);
+            connecting.setVisibility(View.VISIBLE);
+
             vpnStart = true;
 
         } catch (IOException | RemoteException e) {
@@ -229,24 +277,55 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                     vpnStart = false;
                     vpnService.setDefaultStatus();
                     logtv.setText("Not Connected");
+                    btconnect.setVisibility(View.INVISIBLE);
+                    connected.setVisibility(View.INVISIBLE);
+                    disconnect.setVisibility(View.VISIBLE);
+                    connecting.setVisibility(View.INVISIBLE);
+
                     break;
                 case "CONNECTED":
                     vpnStart = true;// it will use after restart this activity
                     //status("connected");
                     logtv.setText("Connected");
+                    btconnect.setVisibility(View.INVISIBLE);
+                    connected.setVisibility(View.VISIBLE);
+                    disconnect.setVisibility(View.INVISIBLE);
+                    connecting.setVisibility(View.INVISIBLE);
+
                     break;
                 case "WAIT":
                     logtv.setText("waiting for server connection!!");
+                    btconnect.setVisibility(View.INVISIBLE);
+                    connected.setVisibility(View.INVISIBLE);
+                    disconnect.setVisibility(View.INVISIBLE);
+                    connecting.setVisibility(View.VISIBLE);
+
                     break;
                 case "AUTH":
                     logtv.setText("server authenticating!!");
+                    btconnect.setVisibility(View.INVISIBLE);
+                    connected.setVisibility(View.INVISIBLE);
+                    disconnect.setVisibility(View.INVISIBLE);
+                    connecting.setVisibility(View.VISIBLE);
+
                     break;
                 case "RECONNECTING":
                     //status("connecting");
                     logtv.setText("Reconnecting...");
+                    btconnect.setVisibility(View.INVISIBLE);
+                    connected.setVisibility(View.INVISIBLE);
+                    disconnect.setVisibility(View.INVISIBLE);
+                    connecting.setVisibility(View.VISIBLE);
+
+
                     break;
                 case "NONETWORK":
                     logtv.setText("No network connection");
+                    btconnect.setVisibility(View.INVISIBLE);
+                    connected.setVisibility(View.INVISIBLE);
+                    disconnect.setVisibility(View.VISIBLE);
+                    connecting.setVisibility(View.INVISIBLE);
+
                     break;
             }
 
@@ -282,7 +361,10 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
 
 
     public void updateConnectionStatus(String duration, String lastPacketReceive, String byteIn, String byteOut) {
-        tvtimer.setText("" + duration+" "+ lastPacketReceive+" "+ byteIn+" "+ byteOut);
+//        tvtimer.setText("" + duration+" "+ lastPacketReceive+" "+ byteIn+" "+ byteOut);
+        upload.setText(byteOut);
+        download.setText(byteIn);
+        tvtimer.setText("" + duration);
     }
 
     public void showToast(String message) {

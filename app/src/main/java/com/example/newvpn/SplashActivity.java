@@ -13,16 +13,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        int DELAY_MILLIS = 3000;
+        int DELAY_MILLIS = 1700;
         new Handler(Looper.getMainLooper()).postDelayed(() ->{
             if(AdManager.getInstance(this).getAdMobInterstitialAd().isLoaded() ||
                     AdManager.getInstance(this).getFBInterstitial().isAdLoaded()) {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashActivity.this, VpnConnect.class));
                 finish();
                 AdManager.getInstance(this).showInterstitialAd(this);
             } else {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashActivity.this, VpnConnect.class));
                 finish();
             }
         }, DELAY_MILLIS);

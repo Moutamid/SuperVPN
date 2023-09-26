@@ -13,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        setProperty("archivesBaseName", "SuperVPN-$versionName")
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,5 +65,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
     implementation project(path: ':vpnLib')
-
+    def lottieVersion = "3.5.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

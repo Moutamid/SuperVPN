@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -72,7 +73,7 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout serverItemLayout;
+        RelativeLayout serverItemLayout;
         ImageView serverIcon;
         TextView serverCountry;
 
