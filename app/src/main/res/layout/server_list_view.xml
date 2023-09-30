@@ -5,11 +5,13 @@
     android:id="@+id/serverItemLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-   android:layout_margin="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:background="@drawable/btn_bg"
-    android:backgroundTint="#4E4A83"
+    android:backgroundTint="#EFF0F1"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="15dp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,24 +28,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-android:layout_toRightOf="@+id/iconImg"
         android:layout_marginLeft="20dp"
-        android:fontFamily="@font/poppins_bold"
-        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iconImg"
+        android:fontFamily="@font/calibri"
         android:text="Testing"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textColor="@color/black"
+        android:layout_marginTop="15dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/iconImg"
+        android:fontFamily="@font/lexend_light"
+        android:text="Server Free 01"
+        android:textColor="#6A6464"
+        android:textSize="13sp" />
+
 
 
     <ImageView
         android:id="@+id/imageConnect"
-        android:layout_width="25dp"
-        android:layout_gravity="center"
-        android:layout_height="25dp"
-        android:layout_centerVertical="true"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:layout_marginEnd="12dp"
-        android:src="@drawable/ic_connect_excellent"
+        android:src="@drawable/wifi"
 
         />
 </RelativeLayout>

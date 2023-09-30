@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.VpnService;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
@@ -25,8 +26,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -39,6 +43,7 @@ import com.example.newvpn.model.Server;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdLayout;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.material.navigation.NavigationView;
 import com.jackandphantom.circularprogressbar.CircleProgressbar;
 
 import java.io.BufferedReader;
@@ -52,22 +57,24 @@ import de.blinkt.openvpn.OpenVpnApi;
 import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.OpenVPNThread;
 import de.blinkt.openvpn.core.VpnStatus;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VpnConnect extends AppCompatActivity implements ChangeServer {
-    TextView btconnect_txt, disconnect_serverConnect_text;
     ImageView btconnect;
-    ImageView serverflag;
+    CircleImageView serverflag;
     boolean vpnStart = false;
     private Server mserver;
     TextView logtv, tvtimer, namecountry;
-    CircleProgressbar circleProgressbar;
     private LinearLayout country;
     private CheckInternetConnection connection;
     private OpenVPNThread vpnThread = new OpenVPNThread();
     private OpenVPNService vpnService = new OpenVPNService();
     private SharedPreference preference;
     LottieAnimationView connecting, disconnect, connected;
-    TextView ip_address, upload, download;
+    TextView upload, download;
+    ImageView menu;
+    NavigationView drawer;
+    ImageView settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,42 +83,46 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
         logtv = findViewById(R.id.serverStatus);
         btconnect = findViewById(R.id.serverConnect);
         connected = findViewById(R.id.connected);
-        btconnect_txt = findViewById(R.id.serverConnect_text);
-        disconnect_serverConnect_text = findViewById(R.id.disconnect_serverConnect_text);
         namecountry = findViewById(R.id.elapse);
-        ip_address = findViewById(R.id.ip_address);
         disconnect = findViewById(R.id.disconnect);
         connecting = findViewById(R.id.connecting);
         upload = findViewById(R.id.upload);
         download = findViewById(R.id.download);
-
         country = findViewById(R.id.homeBtnChooseCountry);
         serverflag = findViewById(R.id.serverFlag);
+        menu = findViewById(R.id.menu);
+        drawer = findViewById(R.id.my_drawer_layout);
+        settings = findViewById(R.id.settings1);
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
-        ip_address.setText("Your IP: " + ipAddress);
         tvtimer = findViewById(R.id.tvtimer);
         final InterstitialAd[] countryinterstitial = new InterstitialAd[1];
         final InterstitialAd[] fbinterstitial = new InterstitialAd[1];
         final com.google.android.gms.ads.InterstitialAd[] interstitialAdadmob = new com.google.android.gms.ads.InterstitialAd[1];
-        circleProgressbar = (CircleProgressbar) findViewById(R.id.circlerprogrss);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        AdManager.getInstance(this).showBannerAd(this);
-        AdManager.getInstance(VpnConnect.this).loadNativeAd(this);
+                drawer.setVisibility(View.VISIBLE);
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(VpnConnect.this, Settings.class));
+            }
+        });
+//        AdManager.getInstance(this).showBannerAd(this);
+//        AdManager.getInstance(VpnConnect.this).loadNativeAd(this);
 
 
         initializeAll();
         Intent intent = getIntent();
         String a = intent.getStringExtra("activity");
         if (a != null) {
-            circleProgressbar.enabledTouch(false);
-
-            circleProgressbar.setProgress(0);
             int animationDuration = 10000; // 2500ms = 2,5s
 
-            circleProgressbar.setProgressWithAnimation(100, animationDuration);
             prepareVpn();
-            circleProgressbar.setProgress(100);
         } else {
 
             isServiceRunning();
@@ -121,7 +132,6 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                 connected.setVisibility(View.VISIBLE);
                 disconnect.setVisibility(View.INVISIBLE);
                 connecting.setVisibility(View.INVISIBLE);
-                circleProgressbar.setProgress(100);
             }
         }
         country.setOnClickListener(new View.OnClickListener() {
@@ -131,49 +141,49 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                 Intent intent1 = new Intent(VpnConnect.this, CountryList.class);
                 startActivity(intent1);
 
-                AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
+//                AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
 
             }
         });
-        btconnect_txt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btconnect_txt.setVisibility(View.GONE);
-                disconnect_serverConnect_text.setVisibility(View.VISIBLE);
-                AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
-                if (vpnStart) {
-                    confirmDisconnect();
-                } else {
-
-                    circleProgressbar.enabledTouch(false);
-                    circleProgressbar.setProgress(0);
-                    int animationDuration = 10000; // 2500ms = 2,5s
-                    circleProgressbar.setProgressWithAnimation(100, animationDuration);
-                    prepareVpn();
-                    circleProgressbar.setProgress(100);
-                }
-            }
-        });
-        disconnect_serverConnect_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                disconnect_serverConnect_text.setVisibility(View.GONE);
-                btconnect_txt.setVisibility(View.VISIBLE);
-
-                AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
-                if (vpnStart) {
-                    confirmDisconnect();
-                } else {
-
-                    circleProgressbar.enabledTouch(false);
-                    circleProgressbar.setProgress(0);
-                    int animationDuration = 10000; // 2500ms = 2,5s
-                    circleProgressbar.setProgressWithAnimation(100, animationDuration);
-                    prepareVpn();
-                    circleProgressbar.setProgress(100);
-                }
-            }
-        });
+//        btconnect_txt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                btconnect_txt.setVisibility(View.GONE);
+//                disconnect_serverConnect_text.setVisibility(View.VISIBLE);
+////                AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
+//                if (vpnStart) {
+//                    confirmDisconnect();
+//                } else {
+//
+//                    circleProgressbar.enabledTouch(false);
+//                    circleProgressbar.setProgress(0);
+//                    int animationDuration = 10000; // 2500ms = 2,5s
+//                    circleProgressbar.setProgressWithAnimation(100, animationDuration);
+//                    prepareVpn();
+//                    circleProgressbar.setProgress(100);
+//                }
+//            }
+//        });
+//        disconnect_serverConnect_text.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                disconnect_serverConnect_text.setVisibility(View.GONE);
+//                btconnect_txt.setVisibility(View.VISIBLE);
+//
+////                AdManager.getInstance(VpnConnect.this).showInterstitialAd(VpnConnect.this);
+//                if (vpnStart) {
+//                    confirmDisconnect();
+//                } else {
+//
+//                    circleProgressbar.enabledTouch(false);
+//                    circleProgressbar.setProgress(0);
+//                    int animationDuration = 10000; // 2500ms = 2,5s
+//                    circleProgressbar.setProgressWithAnimation(100, animationDuration);
+//                    prepareVpn();
+//                    circleProgressbar.setProgress(100);
+//                }
+//            }
+//        });
 
     }
 
@@ -277,10 +287,11 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                     vpnStart = false;
                     vpnService.setDefaultStatus();
                     logtv.setText("Not Connected");
-                    btconnect.setVisibility(View.INVISIBLE);
+                    btconnect.setVisibility(View.VISIBLE);
                     connected.setVisibility(View.INVISIBLE);
-                    disconnect.setVisibility(View.VISIBLE);
+                    disconnect.setVisibility(View.INVISIBLE);
                     connecting.setVisibility(View.INVISIBLE);
+//                    disconnect_serverConnect_text.setVisibility(View.INVISIBLE);
 
                     break;
                 case "CONNECTED":
@@ -290,6 +301,8 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                     btconnect.setVisibility(View.INVISIBLE);
                     connected.setVisibility(View.VISIBLE);
                     disconnect.setVisibility(View.INVISIBLE);
+//                    disconnect_serverConnect_text.setVisibility(View.VISIBLE);
+
                     connecting.setVisibility(View.INVISIBLE);
 
                     break;
@@ -299,6 +312,7 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                     connected.setVisibility(View.INVISIBLE);
                     disconnect.setVisibility(View.INVISIBLE);
                     connecting.setVisibility(View.VISIBLE);
+//                    disconnect_serverConnect_text.setVisibility(View.VISIBLE);
 
                     break;
                 case "AUTH":
@@ -307,6 +321,8 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                     connected.setVisibility(View.INVISIBLE);
                     disconnect.setVisibility(View.INVISIBLE);
                     connecting.setVisibility(View.VISIBLE);
+//                    disconnect_serverConnect_text.setVisibility(View.VISIBLE);
+
 
                     break;
                 case "RECONNECTING":
@@ -317,6 +333,7 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                     disconnect.setVisibility(View.INVISIBLE);
                     connecting.setVisibility(View.VISIBLE);
 
+//                    disconnect_serverConnect_text.setVisibility(View.VISIBLE);
 
                     break;
                 case "NONETWORK":
@@ -325,7 +342,7 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
                     connected.setVisibility(View.INVISIBLE);
                     disconnect.setVisibility(View.VISIBLE);
                     connecting.setVisibility(View.INVISIBLE);
-
+//                    disconnect_serverConnect_text.setVisibility(View.VISIBLE);
                     break;
             }
 
@@ -387,9 +404,9 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
 
         builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                circleProgressbar.enabledTouch(false);
-
-                circleProgressbar.setProgress(0);
+//                circleProgressbar.enabledTouch(false);
+//
+//                circleProgressbar.setProgress(0);
                 stopVpn();
             }
         });
@@ -437,6 +454,7 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
 
     @Override
     public void onBackPressed() {
+        drawer.setVisibility(View.GONE);
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_messbox);
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
@@ -448,7 +466,7 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
             Window window = dialog.getWindow();
             window.setLayout(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         } else {
-            AdManager.getInstance(VpnConnect.this).showNativeAd(this);
+//            AdManager.getInstance(VpnConnect.this).showNativeAd(this);
         }
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -528,4 +546,6 @@ public class VpnConnect extends AppCompatActivity implements ChangeServer {
         nativeAd.registerViewForInteraction(
                 adView, nativeAdMedia, nativeAdIcon, clickableViews);
     }
+
+
 }

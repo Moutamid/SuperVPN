@@ -1,7 +1,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#251E61"
+    android:background="#fff"
     android:layout_height="match_parent">
 
 
@@ -10,7 +10,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:text="Pro VPN"
-      android:textColor="@color/white"
+      android:textColor="#251E61"
       android:fontFamily="@font/heading"
       android:textSize="63dp"/>
 

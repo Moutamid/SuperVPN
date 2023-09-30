@@ -19,7 +19,7 @@
     string:
     <string name="Ad_AdAttribution">Ad</string>
     <string name="ADMOB_ADS_UNIT_ID">ca-app-pub-7294192697106684/3637019841</string>
-<!--    <string name="Fb_interstitial_id">194768635535878_194769225535819</string>-->
+    <!--    <string name="Fb_interstitial_id">194768635535878_194769225535819</string>-->
     <string name="Fb_interstitial_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
     <string name="fb_banner_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
     <string name="are_you_sure_want_to_exit_this_app">Are you sure want to exit this app?</string>
@@ -28,4 +28,6 @@
     <string name="select_server">Select Server</string>
     <string name="enjoying_supervpn">Enjoying SuperVPN</string>
     <string name="if_you_appreciate_it_please_give_up_5_star">If you appreciate it,please give up 5 star</string>
+    <string name="nav_close">close</string>
+    <string name="nav_open">OPen\n</string>
 </resources>

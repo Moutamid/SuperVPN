@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.newvpn" >
+    package="com.example.newvpn">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,12 +17,24 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/iconvpn"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NewVPN" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/Theme.NewVPN">
+        <activity
+            android:name=".PremiumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Settings"
+            android:exported="true">
+
         </activity>
-        <activity android:name=".CountryList" />
+        <activity
+            android:name=".FavouriteActivity"
+            android:exported="false" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".CountryList">
+
+        </activity>
         <activity android:name=".VpnConnect" />
-        <activity android:name=".SplashActivity" >
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +50,7 @@
 
         <service
             android:name="de.blinkt.openvpn.core.OpenVPNService"
-            android:permission="android.permission.BIND_VPN_SERVICE" >
+            android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>

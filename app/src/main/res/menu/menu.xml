@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/nav_account"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_list"
+        android:title="Server List" />
+
+    <item
+        android:id="@+id/nav_settings"
+        android:title="Favourites" />
+
+    <item
+        android:id="@+id/nav_data"
+        android:title="Data Usage" />
+
+    <item
+        android:id="@+id/nav_share"
+        android:title="Share App" />
+    <item
+        android:id="@+id/settings"
+        android:title="Settings" />
+
+</menu>

@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#251E61"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:orientation="vertical">
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#251E61">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/serverParentLayout"
@@ -37,56 +38,67 @@
             <LinearLayout
                 android:id="@+id/homeContextRL"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="20dp">
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp">
 
+                        <ImageView
+                            android:id="@+id/menu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_centerInParent="true"
                             android:fontFamily="@font/heading"
-                            android:gravity="center"
                             android:text="PRO VPN"
-                            android:textColor="@color/white"
-                            android:textSize="42dp" />
-                    </LinearLayout>
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+                        <ImageView
+                            android:id="@+id/settings1"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/settings" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/homeBtnChooseCountry"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="50dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="20dp"
-                        android:background="@drawable/btn_bg"
-                        android:backgroundTint="#4E4A83"
                         android:gravity="end"
                         android:paddingStart="16dp"
+                        android:layout_gravity="center"
                         android:paddingTop="8dp"
                         android:paddingEnd="16dp"
                         android:paddingBottom="8dp">
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/serverFlag"
+                            android:layout_width="44dp"
 
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_height="44dp"
+                            android:layout_gravity="center_vertical"
                             android:src="@drawable/uk_flag" />
 
                         <TextView
@@ -94,59 +106,198 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginStart="15dp"
                             android:layout_marginLeft="15dp"
                             android:fontFamily="@font/regular"
                             android:text="Germany"
-                            android:textColor="#fff"
+                            android:textColor="#000000"
 
-                            android:textSize="15dp" />
+                            android:textSize="30dp" />
 
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_marginTop="2dp"
-                            android:rotation="180"
-                            android:src="@drawable/baseline_arrow_back_ios_24"
-                            android:tint="#fff" />
 
                     </LinearLayout>
 
-                </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/homeBtnChooseCountry"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/serverStatus"
-                    android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg"
+                            android:backgroundTint="#F3F3F3"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingTop="5dp"
+
+
+                            android:paddingBottom="5dp">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                android:rotation="270"
+                                android:src="@drawable/arrow"
+                                app:tint="#F44336" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+
+                                    android:layout_marginTop="7dp"
+                                    android:fontFamily="@font/regular"
+                                    android:text="Upload"
+                                    android:textColor="#675E5E"
+                                    android:textSize="11dp" />
+
+                                <TextView
+                                    android:id="@+id/upload"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="0 kb/s"
+                                    android:textColor="@color/black"
+                                    android:textSize="13dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg"
+                            android:backgroundTint="#F6F8FB"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                android:rotation="90"
+                                android:src="@drawable/arrow"
+                                app:tint="#4CAF50" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+
+                                    android:layout_marginTop="7dp"
+                                    android:fontFamily="@font/regular"
+                                    android:text="Download"
+                                    android:textColor="#675E5E"
+                                    android:textSize="11dp" />
+
+                                <TextView
+                                    android:id="@+id/download"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="0 kb/s"
+                                    android:textColor="@color/black"
+                                    android:textSize="13dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="end">
 
-                    android:text="Not Connected"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="30sp" />
+                    <ImageView
+                        android:layout_width="14dp"
+
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/web"
+                        app:tint="#4CAF50" />
+
+                    <TextView
+                        android:id="@+id/serverStatus"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:fontFamily="@font/poppins_bold"
+
+                        android:text="Not Connected"
+                        android:textColor="#4CAF50"
+
+                        android:textSize="15dp" />
+
+
+                </LinearLayout>
 
 
                 <TextView
                     android:id="@+id/tvtimer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
                     android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:text="00:00:00"
 
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textColor="#000000"
+                    android:textSize="29sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
+                       <RelativeLayout
+                           android:layout_marginTop="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center">
@@ -185,239 +336,18 @@
                             app:lottie_loop="true"
                             app:lottie_rawRes="@raw/connected" />
 
-                        <ImageView
-                            android:id="@+id/serverConnect"
-                            android:layout_width="200dp"
-                            android:layout_height="200dp"
-                            android:layout_centerInParent="true"
-                            android:clickable="false"
-                            android:src="@drawable/shutdown" />
+                           <ImageView
+                               android:id="@+id/serverConnect"
+                               android:layout_width="200dp"
+                               android:layout_height="200dp"
+                               android:layout_centerInParent="true"
+                               android:clickable="false"
+                               android:src="@drawable/shutdown" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clickable="false"
-                            android:gravity="center"
-                            android:visibility="gone">
-
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_centerInParent="true"
-                                android:clickable="false"
-                                android:onClick="serverOnClick"
-                                android:src="@drawable/shutdown" />
-
-                            <com.jackandphantom.circularprogressbar.CircleProgressbar
-                                android:id="@+id/circlerprogrss"
-                                android:layout_width="200dp"
-                                android:layout_height="200dp"
-                                app:cpb_backgroundProgressColor="@color/switchbar"
-                                app:cpb_backgroundProgressWidth="30"
-                                app:cpb_foregroundProgressColor="#22ceff"
-                                app:cpb_foregroundProgressWidth="30"
-                                app:cpb_progress="0"
-                                app:cpb_roundedCorner="true"
-                                app:cpb_touchEnabled="false" />
-
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal" />
-
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/homeBtnChooseCountry"-->
-                    <!--                        android:layout_width="120dp"-->
-                    <!--                        android:layout_height="30dp"-->
-                    <!--                        android:layout_marginTop="20dp"-->
-                    <!--                        android:background="@drawable/button_bg"-->
-                    <!--                        android:gravity="center"-->
-                    <!--                        android:text="Choose Servers"-->
-                    <!--                        android:textColor="@color/common_google_signin_btn_text_dark_default" />-->
-
-                </LinearLayout>
-
-                <!--                <View-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="2dp"-->
-                <!--                    android:layout_alignParentStart="true"-->
-                <!--                    android:layout_alignParentLeft="true"-->
-                <!--                    android:layout_alignParentTop="true"-->
-                <!--                    android:layout_marginStart="0dp"-->
-                <!--                    android:layout_marginLeft="0dp"-->
-                <!--                    android:layout_marginTop="140dp"-->
-                <!--                    android:background="@color/additionalServer" />-->
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="40dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/upload"
-                            android:tint="#fff" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-
-                                android:layout_marginTop="10dp"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="Upload"
-                                android:textColor="@color/white"
-                                android:textSize="15dp" />
-
-                            <TextView
-                                android:id="@+id/upload"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-
-                                android:fontFamily="@font/regular"
-                                android:text="0 kb/s"
-                                android:textColor="@color/white"
-                                android:textSize="10dp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/upload"
-                            android:tint="#fff" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginTop="10dp"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="Download"
-                                android:textColor="@color/white"
-                                android:textSize="15dp" />
-
-                            <TextView
-                                android:id="@+id/download"
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-
-                                android:fontFamily="@font/regular"
-                                android:text="0 kb/s"
-                                android:textColor="@color/white"
-                                android:textSize="10dp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
+                             </RelativeLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/web"
-                    android:tint="#605D93" />
-
-
-                <TextView
-                    android:id="@+id/ip_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="@font/regular"
-                    android:text="Download"
-                    android:textColor="@color/white"
-                    android:textSize="13dp" />
-
-
-            </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-            <TextView
-                android:id="@+id/serverConnect_text"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="35dp"
-                android:background="@drawable/btn_bg"
-                android:backgroundTint="#4CAF50"
-                android:fontFamily="@font/regular"
-                android:gravity="center"
-                android:text="Click here to CONNECT"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
-    <TextView
-                android:id="@+id/disconnect_serverConnect_text"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="35dp"
-                android:background="@drawable/btn_bg"
-                android:backgroundTint="#F44336"
-                android:fontFamily="@font/regular"
-        android:visibility="gone"
-                android:gravity="center"
-                android:text="Click here to DISCONNECT"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
-</RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -429,5 +359,23 @@
         android:orientation="vertical">
 
     </FrameLayout>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+android:visibility="gone"
+        android:layout_height="wrap_content"
+   >
 
+    </androidx.drawerlayout.widget.DrawerLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/my_drawer_layout"
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:visibility="gone"
+        android:background="@drawable/btn_bg"
+        android:backgroundTint="#E4E4E4"
+
+        app:headerLayout="@layout/header_bg"
+        app:menu="@menu/menu" />
 </RelativeLayout>

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, VpnConnect.class);
                 startActivity(intent);
                 finish();
-                AdManager.getInstance(MainActivity.this).showInterstitialAd(MainActivity.this);
+//                AdManager.getInstance(MainActivity.this).showInterstitialAd(MainActivity.this);
             }
         });
 

@@ -43,8 +43,9 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        int pos = position+ 1;
         holder.serverCountry.setText(serverLists.get(position).getCountry());
+        holder.position.setText("Server Free " + pos);
         Glide.with(mContext)
                 .load(serverLists.get(position).getFlagUrl())
                 .into(holder.serverIcon);
@@ -54,7 +55,7 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
             @Override
             public void onClick(View v) {
                 listener.clickedItem(getServer(holder.getAdapterPosition()));
-               // ((Activity)mContext).finish();
+                // ((Activity)mContext).finish();
             }
         });
     }
@@ -64,9 +65,10 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
         notifyDataSetChanged();
     }
 
-    public Server getServer(int i){
+    public Server getServer(int i) {
         return serverLists.get(i);
     }
+
     @Override
     public int getItemCount() {
         return serverLists.size();
@@ -75,7 +77,7 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout serverItemLayout;
         ImageView serverIcon;
-        TextView serverCountry;
+        TextView serverCountry, position;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +85,7 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
             serverItemLayout = itemView.findViewById(R.id.serverItemLayout);
             serverIcon = itemView.findViewById(R.id.iconImg);
             serverCountry = itemView.findViewById(R.id.countryTv);
+            position = itemView.findViewById(R.id.position);
         }
     }
 }
